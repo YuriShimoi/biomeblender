@@ -46,7 +46,7 @@ function proceduralMap(x=25, y=50, spray=6) {
     map[parseInt(x/2)-5][parseInt(y/2)] = 6;
     map[parseInt(x/2)+5][parseInt(y/2)] = 6;
 
-    return new BlendedMap(map).spray(spray).smooth().outline(1,1,[6]).toArray();
+    return new BlendedMap(map).spray(spray).smooth().toArray();
 }
 
 function randomMap(variants=5) {
