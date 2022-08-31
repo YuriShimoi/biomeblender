@@ -18,35 +18,44 @@ function sampleMap() {
 }
 
 function proceduralMap(x=25, y=50, spray=6) {
-    let map = new Array(x).fill(0).map(_ => new Array(y).fill(6));
-    
-    // corner 1
-    map[3][3]  = 1;
-    map[8][3]  = 1;
-    map[1][10] = 1;
-    // corner 2
-    map[x-3][3]  = 2;
-    map[x-8][3]  = 2;
-    map[x-1][10] = 2;
-    // corner 3
-    map[3][y-3]  = 3;
-    map[8][y-3]  = 3;
-    map[1][y-10] = 3;
-    // corner 3
-    map[x-3][y-3]  = 4;
-    map[x-8][y-3]  = 4;
-    map[x-1][y-10] = 4;
-    // center
-    map[parseInt(x/2)][parseInt(y/2)-5] = 5;
-    map[parseInt(x/2)][parseInt(y/2)+5] = 5;
-    map[parseInt(x/2)][parseInt(y/2)]   = 5;
-    // belt
-    map[parseInt(x/2)][parseInt(y/2)-9] = 6;
-    map[parseInt(x/2)][parseInt(y/2)+9] = 6;
-    map[parseInt(x/2)-5][parseInt(y/2)] = 6;
-    map[parseInt(x/2)+5][parseInt(y/2)] = 6;
+    let map = new BlendedMap([]).config({x:x,y:y}, 6);
 
-    return new BlendedMap(map).spray(spray).smooth().toArray();
+    // corner 1
+    map.addDots({
+        1: [ // corner 1
+            {x: 3, y: 3},
+            {x: 8, y: 3},
+            {x: 1, y: 10}
+        ],
+        2: [ // corner 2
+            {x: x-3, y: 3},
+            {x: x-8, y: 3},
+            {x: x-1, y: 10}
+        ],
+        3: [ // corner 3
+            {x: 3, y: y-3},
+            {x: 8, y: y-3},
+            {x: 1, y: y-10}
+        ],
+        4: [ // corner 4
+            {x: x-3, y: y-3},
+            {x: x-8, y: y-3},
+            {x: x-1, y: y-10}
+        ],
+        0: [ // center
+            {x: parseInt(x/2), y: parseInt(y/2)-5},
+            {x: parseInt(x/2), y: parseInt(y/2)+5},
+            {x: parseInt(x/2), y: parseInt(y/2)}
+        ],
+        6: [ // belt
+            {x: parseInt(x/2),   y: parseInt(y/2)-9},
+            {x: parseInt(x/2),   y: parseInt(y/2)+9},
+            {x: parseInt(x/2)-5, y: parseInt(y/2)},
+            {x: parseInt(x/2)+5, y: parseInt(y/2)}
+        ]
+    });
+
+    return new BlendedMap(map.toArray()).spray(1).smooth().toArray();
 }
 
 function randomMap(variants=5) {
@@ -54,8 +63,8 @@ function randomMap(variants=5) {
     return new Array(sx).fill(0).map(_ => new Array(sy).fill(0).map(_ => Math.ceil(Math.random()*variants)));
 }
 
-let _document_ready = setInterval((f) => {if(document.readyState == "complete"){clearInterval(_document_ready);delete _document_ready;f()}}, 1, () => {
+_document_ready = setInterval((f) => {if(document.readyState == "complete"){clearInterval(_document_ready);delete _document_ready;f()}}, 1, () => {
     map = proceduralMap();
-    // let map = proceduralMap(50, 100, 18);
+    // map = proceduralMap(50, 100, 18);
     Visualizer.render(map, document.getElementById('main'), {1:'lightblue',2:'orange',3:'forestgreen',4:'indianred',5:'deepskyblue',6:'royalblue'}, true, false);
 });
