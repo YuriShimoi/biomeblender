@@ -46,7 +46,7 @@ function proceduralMap(x=25, y=50, spray=6) {
     map[parseInt(x/2)-5][parseInt(y/2)] = 6;
     map[parseInt(x/2)+5][parseInt(y/2)] = 6;
 
-    return new BlendedMap(map).spray(spray).outline(1,1,[5]).toArray();
+    return new BlendedMap(map).spray(spray).smooth().outline(1,1,[6]).toArray();
 }
 
 function randomMap(variants=5) {
@@ -55,7 +55,7 @@ function randomMap(variants=5) {
 }
 
 let _document_ready = setInterval((f) => {if(document.readyState == "complete"){clearInterval(_document_ready);delete _document_ready;f()}}, 1, () => {
-    let map = proceduralMap();
+    map = proceduralMap();
     // let map = proceduralMap(50, 100, 18);
-    Visualizer.render(map, document.getElementById('main'), [,'lightblue','orange','forestgreen','indianred','deepskyblue','royalblue'], true, false);
+    Visualizer.render(map, document.getElementById('main'), {1:'lightblue',2:'orange',3:'forestgreen',4:'indianred',5:'deepskyblue',6:'royalblue'}, true, false);
 });
