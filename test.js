@@ -19,43 +19,37 @@ function sampleMap() {
 
 function proceduralMap(x=25, y=50, spray=6) {
     let map = new BlendedMap([]).config({x:x,y:y}, 6);
-
+    
     // corner 1
     map.addDots({
         1: [ // corner 1
-            {x: 3, y: 3},
+            {x: 2, y: 3},
             {x: 8, y: 3},
-            {x: 1, y: 10}
+            {x: 2, y: 10}
         ],
         2: [ // corner 2
             {x: x-3, y: 3},
-            {x: x-8, y: 3},
-            {x: x-1, y: 10}
+            {x: x-9, y: 3},
+            {x: x-3, y: 10}
         ],
         3: [ // corner 3
-            {x: 3, y: y-3},
+            {x: 2, y: y-3},
             {x: 8, y: y-3},
-            {x: 1, y: y-10}
+            {x: 2, y: y-10}
         ],
         4: [ // corner 4
             {x: x-3, y: y-3},
-            {x: x-8, y: y-3},
-            {x: x-1, y: y-10}
+            {x: x-9, y: y-3},
+            {x: x-3, y: y-10}
         ],
-        0: [ // center
+        5: [ // center
             {x: parseInt(x/2), y: parseInt(y/2)-5},
             {x: parseInt(x/2), y: parseInt(y/2)+5},
             {x: parseInt(x/2), y: parseInt(y/2)}
-        ],
-        6: [ // belt
-            {x: parseInt(x/2),   y: parseInt(y/2)-9},
-            {x: parseInt(x/2),   y: parseInt(y/2)+9},
-            {x: parseInt(x/2)-5, y: parseInt(y/2)},
-            {x: parseInt(x/2)+5, y: parseInt(y/2)}
         ]
     });
 
-    return new BlendedMap(map.toArray()).spray(1).smooth().toArray();
+    return map.spray(spray).outline(1, 1, [5], 6).smooth().toArray();
 }
 
 function randomMap(variants=5) {
