@@ -52,9 +52,9 @@ function proceduralMap(x=25, y=50, spray=6) {
     return map.spray(spray).outline(1, 1, [5], 6).smooth().toArray();
 }
 
-function randomMap(variants=5) {
-    let [sx, sy] = [Math.ceil(Math.random()*20)+3, Math.ceil(Math.random()*20)+3];
-    return new Array(sx).fill(0).map(_ => new Array(sy).fill(0).map(_ => Math.ceil(Math.random()*variants)));
+function randomMap(sx=25, sy=50, variants=6) {
+    let map = new Array(sx).fill(0).map(_ => new Array(sy).fill(0).map(_ => Math.ceil(Math.random()*variants)));
+    return new BlendedMap(map).smooth(5).toArray();
 }
 
 _document_ready = setInterval((f) => {if(document.readyState == "complete"){clearInterval(_document_ready);delete _document_ready;f()}}, 1, () => {
